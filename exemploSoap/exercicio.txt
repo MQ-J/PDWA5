@@ -1,0 +1,1 @@
+O seu Web Service irá fornecer um serviço de manipulação de clientes de um sistema. Cada cliente deverá conter: id, nome completo, e-mail, senha, cargo, salário, CPF, RG, atribuições, data de início na empresa, data de nascimento. 
