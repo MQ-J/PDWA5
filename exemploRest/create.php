@@ -31,7 +31,7 @@ if(
     // set product property values
     $product->name = $data->name;
     $product->price = $data->price;
-    $product->description = $data->description;
+    $product->description = $data->descriptio/n;
     $product->category_id = $data->category_id;
     $product->created = date('Y-m-d H:i:s');
   

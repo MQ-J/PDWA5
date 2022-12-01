@@ -14,11 +14,17 @@ $db = $database->getConnection();
   
 // initialize object
 $product = new Product($db);
+
+// get posted data
+$data = json_decode(file_get_contents("php://input"));
+
+// set product property values
+    $product->name = $data->name;
   
 // read products will be here
 
 // query products
-$stmt = $product->read();
+$stmt = $product->findByName();
 $num = $stmt->rowCount();
   
 // check if more than 0 record found
