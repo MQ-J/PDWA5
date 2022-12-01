@@ -42,7 +42,7 @@ function read(){
     return $stmt;
 }
 
-    // find products
+    // find products by name
 function findByName(){
   
     // select all query
@@ -53,7 +53,7 @@ function findByName(){
                 LEFT JOIN
                     categories c
                         ON p.category_id = c.id
-          WHERE p.name = ?  ORDER BY
+          WHERE p.name LIKE ?  ORDER BY
                 p.created DESC";
   
     // prepare query statement
@@ -64,6 +64,58 @@ function findByName(){
   
     // bind id of record to delete
     $stmt->bindParam(1, $this->name);
+  
+    // execute query
+    $stmt->execute();
+  
+    return $stmt;
+}
+
+    // find products by category
+function findByCategory(){
+  
+    // select all query
+    $query = "SELECT
+                c.name as category_name, p.id, p.name, p.description, p.price, p.category_id, p.created
+            FROM
+                " . $this->table_name . " p
+                LEFT JOIN
+                    categories c
+                        ON p.category_id = c.id
+          WHERE p.category = ?  ORDER BY
+                p.created DESC";
+  
+    // prepare query statement
+    $stmt = $this->conn->prepare($query);
+
+  // sanitize
+    $this->id=htmlspecialchars(strip_tags($this->category));
+  
+    // bind id of record to delete
+    $stmt->bindParam(1, $this->category);
+  
+    // execute query
+    $stmt->execute();
+  
+    return $stmt;
+}
+
+    // order products by price
+function orderByPrice($order){
+  
+    // select all query
+    $query = "SELECT
+                c.name as category_name, p.id, p.name, p.description, p.price, p.category_id, p.created
+            FROM
+                " . $this->table_name . " p
+                LEFT JOIN
+                    categories c
+                        ON p.category_id = c.id
+            ORDER BY
+                p.price " . $order . "";
+  
+    // prepare query statement
+    $stmt = $this->conn->prepare($query);
   
     // execute query
     $stmt->execute();
@@ -144,6 +196,7 @@ function update(){
   
     return false;
 }
+
 // delete the product
 function delete(){
   
